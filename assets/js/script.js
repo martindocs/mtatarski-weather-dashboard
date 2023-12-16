@@ -1,5 +1,55 @@
 $(document).ready(function() {
 
+  // Function to get data from the localStorage
+  const getLocalStorage = () => {
+    const storage = JSON.parse(localStorage.getItem('locations'));
+    if(!storage){
+      localStorage.setItem('locations', JSON.stringify([]));
+    }
+    return storage === null ? [] : storage;
+  }
+
+  // Function to set data in the localStorage
+  const setLocalStorage = (search) => {
+    if(search){
+      const getStorage = getLocalStorage();            
+      getStorage.push(search.toLowerCase());
+      return localStorage.setItem('locations', JSON.stringify(getStorage));
+    }
+  }
+  
+  // Function to create new button
+  const newButton = (search) => {
+    const historyList = $('.accordion-body');
+    
+    if(Array.isArray(search) && search.length > 0){
+      search.forEach(function (item) {
+        const button = $('<button>').addClass('btn btn-outline-secondary').text(item);
+        historyList.prepend(button);
+      });
+    }else{
+      if(search.length === 0){                      
+        const p =  $('<p>');
+        p.attr('id', 'no-history');
+        p.text('No History');
+        historyList.prepend(p);
+      }else{
+        $('#no-history').remove();
+        const button = $('<button>').addClass('btn btn-outline-secondary').text(search);
+        historyList.prepend(button);
+      }
+    }
+  }
+
+  // Get the data from the localStorage on initialization
+  const searchHistory = getLocalStorage();
+  // console.log(!searchHistory)
+
+  // Display the search history
+  if(searchHistory !== null || searchHistory.length > 0){    
+    newButton(searchHistory);    
+  }
+
   // Function to round up the temperatures to the nearest integer
   const roundUpNumber = (number) => {
     return Math.round(number * 100 / 100);
@@ -60,6 +110,7 @@ $(document).ready(function() {
     if(population) cardType.population.text(`Population: ${population} people`);
   }
   
+
   // Event listener for search results
   $('#search-form').on('submit', function(e) {
     e.preventDefault();
@@ -132,7 +183,18 @@ $(document).ready(function() {
         pressure: main.pressure,
         visible: visibility,
         population: city.population.toLocaleString(),
-      })
+      });
+
+      getLocalStorage();    
+      
+      // Add search location to the localStorage
+      const history = getLocalStorage();    
+      
+      if(!history.includes(searchInput)) {
+
+        newButton(searchInput.toLowerCase());      
+        setLocalStorage(searchInput)
+      };
 
 
     })
@@ -141,5 +203,4 @@ $(document).ready(function() {
     })
 
   })
-
 });
