@@ -21,7 +21,7 @@
       <aside class="col-md-3">
 
         <!-- Current weather information -->
-        <div class="card">
+        <!-- <div class="card">
           <div class="card-header text-center" id="current-city">City name</div>
           <div class="card-body">
             <div class="row">
@@ -46,10 +46,10 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
        
         <!-- Search  -->
-        <form id="search-form" class="mt-3">
+        <form id="search-form">
           <div class="input-group mb-3">
             <input type="text" class="form-control" id="search-input" placeholder="Search for a city" aria-label="search" aria-describedby="button-search">
 
@@ -77,9 +77,57 @@
       <!-- Five days forecast -->
       <div class="col-md-9">
         <section>
-          <div>5 Day Forecast</div>
+          <div class="row">
+            <div class="col">
+
+              <!-- Current weather information -->
+              <div class="card-group">
+
+                <div class="card">
+                  <div class="card-header text-center" id="current-city">City name</div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col">
+                        <span id="current-icon">icon</span>
+                        <p id="current-desc">cloudy</p>
+                      </div>
+                      <div class="col">               
+                        <p id="current-date">Aug 31 2023</p>
+                        <div class="row">
+                          <div class="col">
+                            <div id="current-temp">20C</div>
+                            <div id="current-temp-hi">Hi 29</div>
+                            <div id="current-temp-low">Low 24</div>
+                          </div>
+                          <div class="col">                  
+                            <div id="current-feels">Feels like: 20</div>
+                            <div id="current-humid">Humidity: 20</div>
+                            <div id="current-wind">Wind: 20</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card">
+                  <div class="card-header">Details Title</div>
+                  <div class="card-body">
+                    <div>Sunrise</div>
+                    <div>Sunset</div>
+                    <div>Presure</div>
+                    <div>Visibility</div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>            
+          </div>
         </section>
+
         <section id="forecast">
+          <div>5 Day Forecast</div>
           <div class="row">
 
             <div class="col">              
