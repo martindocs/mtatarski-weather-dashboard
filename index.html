@@ -18,7 +18,7 @@
 
   <div class="container-fluid" style="max-width: 1400px">
     <div class="row mt-3">
-      <aside class="col-md-3">
+      <aside class="col-lg-3">
 
         <!-- Current weather information -->
         <!-- <div class="card">
@@ -75,34 +75,31 @@
       </aside>
 
       <!-- Five days forecast -->
-      <div class="col-md-9">
-        <section>
-          <div class="row">
-            <div class="col">
-
+      <div class="col-lg-9 lg-mt-3">
+        <section id="main" class="main">
+          <div class="row justify-content-lg-start justify-content-md-center">
+            <div class="col-md-6 pe-0">
               <!-- Current weather information -->
-              <div class="card-group">
-
-                <div class="card">
-                  <div class="card-header text-center" id="current-city">City name</div>
+                <div class="card main-card">
+                  <div class="card-header search-city" id="search-city">London</div>
                   <div class="card-body">
                     <div class="row">
-                      <div class="col">
-                        <span id="current-icon">icon</span>
-                        <p id="current-desc">cloudy</p>
+                      <div class="col-4">
+                        <img class="main-icon" id="main-icon" src="./assets/icon.png">
+                        <p class="main-desc" id="main-desc">clear sky</p>
                       </div>
                       <div class="col">               
-                        <p id="current-date">Aug 31 2023</p>
+                        <p class="main-date" id="main-date">2023-12-17</p>
                         <div class="row">
-                          <div class="col">
-                            <div id="current-temp">20C</div>
-                            <div id="current-temp-hi">Hi 29</div>
-                            <div id="current-temp-low">Low 24</div>
+                          <div class="col text-center">
+                            <div class="main-temp" id="main-temp">10°C</div>
+                            <div id="main-temp-hi">Hi 10°C</div>
+                            <div id="main-temp-low">Lo 10°C</div>
                           </div>
-                          <div class="col">                  
-                            <div id="current-feels">Feels like: 20</div>
-                            <div id="current-humid">Humidity: 20</div>
-                            <div id="current-wind">Wind: 20</div>
+                          <div class="col mt-2 main-details">                  
+                            <div id="main-feels">Feels like: 9°C</div>
+                            <div id="main-humid">Humidity: 71%</div>
+                            <div id="main-wind">Wind: 6 km/h</div>
                           </div>
                         </div>
                       </div>
@@ -110,17 +107,21 @@
                   </div>
                 </div>
 
-                <div class="card">
-                  <div class="card-header">Details Title</div>
-                  <div class="card-body">
-                    <div>Sunrise</div>
-                    <div>Sunset</div>
-                    <div>Presure</div>
-                    <div>Visibility</div>
+            </div>
+
+            <div class="col-md-3 ps-0">
+                <div class="card card-details">
+                  <div class="d-flex card-header details-header">Details</div>
+                  <div class="card-body details-body">
+                    <div id="main-sunrise">Sunrise: 8:00</div>
+                    <div id="main-sunset">Sunset: 15:51</div>
+                    <div id="main-pressure">Presure: 1034 hPa</div>
+                    <div id="main-visible">Visibility: 10000 km</div>
+                    <div id="main-population">Population: 10,000,000 people</div>
                   </div>
                 </div>
 
-              </div>
+             
 
             </div>            
           </div>
@@ -132,17 +133,17 @@
 
             <div class="col">              
               <div class="card">
-                <div class="card-header forecast-date">Date</div>
+                <div class="card-header weather-date">Date</div>
                 <div class="card-body">
                   <div class="row">
-                    <span class="forecast-icon">icon</span>                
-                    <div class="forecast-temp">27C</div>
+                    <span class="weather-icon">icon</span>                
+                    <div class="weather-temp">27C</div>
                   </div>
                   <div class="row">
                     <div class="col">
-                      <div class="forecast-temp">Temp: 20</div>
-                      <div class="forecast-wind">Wind: 20</div>
-                      <div class="forecast-humid">Humidity: 20</div>
+                      <div class="weather-temp">Temp: 20</div>
+                      <div class="weather-wind">Wind: 20</div>
+                      <div class="weather-humid">Humidity: 20</div>
                     </div>
                   </div>
                 </div>
@@ -151,17 +152,17 @@
 
             <div class="col">              
               <div class="card">
-                <div class="card-header forecast-date">Date</div>
+                <div class="card-header weather-date">Date</div>
                 <div class="card-body">
                   <div class="row">
-                    <span class="forecast-icon">icon</span>                
-                    <div class="forecast-temp">27C</div>
+                    <span class="weather-icon">icon</span>                
+                    <div class="weather-temp">27C</div>
                   </div>
                   <div class="row">
                     <div class="col">
-                      <div class="forecast-temp">Temp: 20</div>
-                      <div class="forecast-wind">Wind: 20</div>
-                      <div class="forecast-humid">Humidity: 20</div>
+                      <div class="weather-temp">Temp: 20</div>
+                      <div class="weather-wind">Wind: 20</div>
+                      <div class="weather-humid">Humidity: 20</div>
                     </div>
                   </div>
                 </div>
@@ -170,17 +171,17 @@
 
             <div class="col">              
               <div class="card">
-                <div class="card-header forecast-date">Date</div>
+                <div class="card-header weather-date">Date</div>
                 <div class="card-body">
                   <div class="row">
-                    <span class="forecast-icon">icon</span>                
-                    <div class="forecast-temp">27C</div>
+                    <span class="weather-icon">icon</span>                
+                    <div class="weather-temp">27C</div>
                   </div>
                   <div class="row">
                     <div class="col">
-                      <div class="forecast-temp">Temp: 20</div>
-                      <div class="forecast-wind">Wind: 20</div>
-                      <div class="forecast-humid">Humidity: 20</div>
+                      <div class="weather-temp">Temp: 20</div>
+                      <div class="weather-wind">Wind: 20</div>
+                      <div class="weather-humid">Humidity: 20</div>
                     </div>
                   </div>
                 </div>
@@ -189,17 +190,17 @@
 
             <div class="col">              
               <div class="card">
-                <div class="card-header forecast-date">Date</div>
+                <div class="card-header weather-date">Date</div>
                 <div class="card-body">
                   <div class="row">
-                    <span class="forecast-icon">icon</span>                
-                    <div class="forecast-temp">27C</div>
+                    <span class="weather-icon">icon</span>                
+                    <div class="weather-temp">27C</div>
                   </div>
                   <div class="row">
                     <div class="col">
-                      <div class="forecast-temp">Temp: 20</div>
-                      <div class="forecast-wind">Wind: 20</div>
-                      <div class="forecast-humid">Humidity: 20</div>
+                      <div class="weather-temp">Temp: 20</div>
+                      <div class="weather-wind">Wind: 20</div>
+                      <div class="weather-humid">Humidity: 20</div>
                     </div>
                   </div>
                 </div>
@@ -208,17 +209,17 @@
 
             <div class="col">              
               <div class="card">
-                <div class="card-header forecast-date">Date</div>
+                <div class="card-header weather-date">Date</div>
                 <div class="card-body">
                   <div class="row">
-                    <span class="forecast-icon">icon</span>                
-                    <div class="forecast-temp">27C</div>
+                    <span class="weather-icon">icon</span>                
+                    <div class="weather-temp">27C</div>
                   </div>
                   <div class="row">
                     <div class="col">
-                      <div class="forecast-temp">Temp: 20</div>
-                      <div class="forecast-wind">Wind: 20</div>
-                      <div class="forecast-humid">Humidity: 20</div>
+                      <div class="weather-temp">Temp: 20</div>
+                      <div class="weather-wind">Wind: 20</div>
+                      <div class="weather-humid">Humidity: 20</div>
                     </div>
                   </div>
                 </div>
