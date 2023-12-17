@@ -1,12 +1,16 @@
 /* MAIN CARD */
+.main {
+  height: 300px;
+}
+
 .main-card{
-  height: 100%;
+  height: 300px;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
   
 }
 .card-details {
-  height: 100%;
+  height: 300px;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   border-left: 0
