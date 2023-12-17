@@ -18,32 +18,38 @@ $(document).ready(function() {
     }
   }
   
-  // Function to create new button
+  // Function to create buttons
   const newButton = (search) => {
     const historyList = $('.accordion-body');
     
+    // Remove existing 'No History' element if it exists
+    $('#no-history').remove();
+
+    // Create buttons in the container history
     if(Array.isArray(search) && search.length > 0){
       search.forEach(function (item) {
-        const button = $('<button>').addClass('btn btn-outline-secondary').text(item);
+        const button = createButton(item);      
         historyList.prepend(button);
       });
     }else{
+      // Create new button when user clicks/enter new location
       if(search.length === 0){                      
-        const p =  $('<p>');
-        p.attr('id', 'no-history');
-        p.text('No History');
+        const p =  $('<p>').attr('id', 'no-history').text('No History');
         historyList.prepend(p);
       }else{
-        $('#no-history').remove();
-        const button = $('<button>').addClass('btn btn-outline-secondary').text(search);
+        const button = createButton(search);       
         historyList.prepend(button);
       }
     }
   }
 
+  // Helper function to create a button element
+  const createButton = (text) => {
+    return $('<button>').addClass('btn btn-outline-secondary locations').attr('data-location', text).text(text);
+  }
+
   // Get the data from the localStorage on initialization
   const searchHistory = getLocalStorage();
-  // console.log(!searchHistory)
 
   // Display the search history
   if(searchHistory !== null || searchHistory.length > 0){    
@@ -63,7 +69,6 @@ $(document).ready(function() {
   // Function to get the hours and minutes
   const sunSetSunRise = (time) => {
     const date = new Date(time * 1000);
-
     const hours = date.getHours();
     const minutes = date.getMinutes().toString().padStart(2, '0');
     return hours + ':' + minutes;
@@ -110,11 +115,9 @@ $(document).ready(function() {
     if(population) cardType.population.text(`Population: ${population} people`);
   }
   
+  // Function to fetch weather data
+  const fetchData = async (searchInput) => {
 
-  // Event listener for search results
-  $('#search-form').on('submit', function(e) {
-    e.preventDefault();
-    
     // Elements for the main card
     const mainCard = {
       city: $('#search-city'), 
@@ -132,38 +135,26 @@ $(document).ready(function() {
       pressure: $('#main-pressure'),
       visible: $('#main-visible'),
       population: $('#main-population'),
-    };
+    };    
 
-    // Search input
-    const searchInput = $('#search-input').val();
-    
     // API key
     const apiKey = '61accb2975e7eb205d195492e4e98f62';
 
-    // Query url    
-    let queryUrl = 'https://api.openweathermap.org/data/2.5/forecast?q=' + searchInput + '&appid=' + apiKey + '&units=metric';
- 
-    // Fetch the weather data form Weather API
-    fetch(queryUrl)
-    .then((response) => response.json())
-    .then((data) => {
-      
-      const city = data.city;      
-      const filterData = []; // one card per day 
+    // Bulding query parameters
+    const queryUrl = 'https://api.openweathermap.org/data/2.5/forecast?q=' + searchInput + '&appid=' + apiKey + '&units=metric';
 
-      // Filter the weather data and grap only data at 12pm for each day
-      data.list.forEach(function(time) {  
-        const dateTime = getDate(time.dt);       
-        if(dateTime.getHours() === 12){
-          filterData.push(time);
-        }
-      });
+    try{
+      const response = await fetch(queryUrl);
 
-      // Destructure the data from the API
-      const{weather, dt_txt:wdate, main, wind, visibility} = filterData[0];
+      if (!response.ok) {
+        return false;
+      }
 
-      // console.log(weather, wdate, main, wind);
-      // console.log(main, visibility)
+      const data = await response.json();
+      const city = data.city;
+      const filterData = data.list.filter(time => getDate(time.dt).getHours() === 12);
+
+      const { weather, dt_txt: wdate, main, wind, visibility } = filterData[0];
 
       // Fill the data for the main card
       card({
@@ -185,22 +176,40 @@ $(document).ready(function() {
         population: city.population.toLocaleString(),
       });
 
-      getLocalStorage();    
-      
-      // Add search location to the localStorage
-      const history = getLocalStorage();    
-      
-      if(!history.includes(searchInput)) {
+      return true;
 
-        newButton(searchInput.toLowerCase());      
-        setLocalStorage(searchInput)
-      };
+    }catch(error){
+      return false;
+    }    
+  };
 
-
+  // Event listener for search results
+  $('#search-form').on('submit', function(e) {
+    e.preventDefault();
+    
+    // Search input
+    const searchInput = $('#search-input').val();
+  
+    fetchData(searchInput).then((data) => {
+      if(data){
+        getLocalStorage();
+    
+        const history = getLocalStorage();    
+                
+        if(!history.includes(searchInput)) {
+          newButton(searchInput.toLowerCase());      
+          setLocalStorage(searchInput)
+        };
+      }
     })
-    .catch((error) =>{
-      console.log(error);
-    })
 
+  });
+
+  // Event listeners for history buttons
+  $('#accordion-body').on('click', '.locations', function() {
+
+    const location = $(this).attr('data-location');    
+    fetchData(location);
+    
   })
 });
