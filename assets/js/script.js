@@ -151,12 +151,35 @@ $(document).ready(function() {
       }
 
       const data = await response.json();
+
       const city = data.city;
-      const filterData = data.list.filter(time => getDate(time.dt).getHours() === 12);
+      const filterData = [];
+      let currentWeather = null;
+      const currentDate = new Date(); // Get the current date
 
-      const { weather, dt_txt: wdate, main, wind, visibility } = filterData[0];
+      data.list.forEach((time) => {
+        // Convert timestamp to date
+        const entryDate = getDate(time.dt);
+       
+        // If the entry is for the current day and currentWeather is not assigned yet
+        if(entryDate.getDate() === currentDate.getDate() && currentWeather === null) {
+          currentWeather = time;
+        }
 
-      // Fill the data for the main card
+        // If the entry is at 12 PM and not for the current day, include it in forecastData
+        if (entryDate.getHours() === 12 && entryDate.getDate() !== currentDate.getDate()) {
+          filterData.push(time);
+        }           
+      });
+
+      // console.log(currentWeather)
+      // console.log(filterData)
+
+
+      // const { weather, dt_txt: wdate, main, wind, visibility } = filterData[0];
+      const { weather, dt_txt: wdate, main, wind, visibility } = currentWeather;
+
+      // Populate the data for the main card
       card({
         cardType: mainCard,
         city: city.name,
@@ -172,21 +195,21 @@ $(document).ready(function() {
         sunrise: sunSetSunRise(city.sunrise),
         sunset: sunSetSunRise(city.sunset),
         pressure: main.pressure,
-        visible: visibility,
+        visible: visibility.toLocaleString(),
         population: city.population.toLocaleString(),
       });
      
       const cardsContainer = $('#forecast .row');  
       cardsContainer.empty();
 
+      // Create the forecast cards HTML elements
       for(let i = 0; i < filterData.length; i++) {
         const col1 = $('<div>').addClass('col');
         const card = $('<div>').addClass('card');
         const date = $('<div>').addClass('card-header weather-date').attr('id', `date-${i}`);
         const cardBody = $('<div>').addClass('card-body');
         const row1 = $('<div>').addClass('row');
-        const icon = $('<img>').addClass('weather-icon').attr('src', weather[0].icon).attr('alt', `weather icon ${weather[0].description}`).attr('id', `icon-${i}`);
-       
+        const icon = $('<img>').addClass('weather-icon').attr('src', weather[0].icon).attr('alt', `weather icon ${weather[0].description}`).attr('id', `icon-${i}`);       
         const row2 = $('<div>').addClass('row');
         const col2 = $('<div>').addClass('col');
         const temp = $('<div>').addClass('weather-temp').attr('id', `temp-${i}`);
@@ -210,11 +233,11 @@ $(document).ready(function() {
           wind: $(`#wind-${index}`),
           humid: $(`#humid-${index}`),
         }
-      }  
-
+      }    
+      
+      // Populate the forecast cards
       filterData.forEach(function(data, index) {
-        const { weather, dt_txt: wdate, main, wind} = data;
-        
+        const { weather, dt_txt: wdate, main, wind} = data;        
           card({
           cardType: forecastCards(index),
           icon: weather[0].icon,
@@ -223,8 +246,7 @@ $(document).ready(function() {
           wind: roundUpNumber(wind.speed),
           humid: main.humidity,
         })
-
-      })
+      });
 
       return true;
 
