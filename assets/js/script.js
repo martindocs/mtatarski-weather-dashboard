@@ -185,7 +185,8 @@ $(document).ready(function() {
         const date = $('<div>').addClass('card-header weather-date').attr('id', `date-${i}`);
         const cardBody = $('<div>').addClass('card-body');
         const row1 = $('<div>').addClass('row');
-        const icon = $('<span>').addClass('weather-icon').attr('id', `icon-${i}`);
+        const icon = $('<img>').addClass('weather-icon').attr('src', weather[0].icon).attr('alt', `weather icon ${weather[0].description}`).attr('id', `icon-${i}`);
+       
         const row2 = $('<div>').addClass('row');
         const col2 = $('<div>').addClass('col');
         const temp = $('<div>').addClass('weather-temp').attr('id', `temp-${i}`);
@@ -240,7 +241,7 @@ $(document).ready(function() {
     const searchInput = $('#search-input').val();
   
     fetchData(searchInput).then((data) => {
-      if(data){
+      if(data){        
         getLocalStorage();
     
         const history = getLocalStorage();    
