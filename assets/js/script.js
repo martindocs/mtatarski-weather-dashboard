@@ -94,7 +94,7 @@ $(document).ready(function() {
       visible,
       population,
     } = args[0];
-
+  
     if(city) cardType.city.text(city);
     if(icon) {
       cardType.icon.attr('src', `http://openweathermap.org/img/wn/${icon}@2x.png`);
@@ -136,7 +136,7 @@ $(document).ready(function() {
       visible: $('#main-visible'),
       population: $('#main-population'),
     };    
-
+   
     // API key
     const apiKey = '61accb2975e7eb205d195492e4e98f62';
 
@@ -175,6 +175,55 @@ $(document).ready(function() {
         visible: visibility,
         population: city.population.toLocaleString(),
       });
+     
+      const cardsContainer = $('#forecast .row');  
+      cardsContainer.empty();
+
+      for(let i = 0; i < filterData.length; i++) {
+        const col1 = $('<div>').addClass('col');
+        const card = $('<div>').addClass('card');
+        const date = $('<div>').addClass('card-header weather-date').attr('id', `date-${i}`);
+        const cardBody = $('<div>').addClass('card-body');
+        const row1 = $('<div>').addClass('row');
+        const icon = $('<span>').addClass('weather-icon').attr('id', `icon-${i}`);
+        const row2 = $('<div>').addClass('row');
+        const col2 = $('<div>').addClass('col');
+        const temp = $('<div>').addClass('weather-temp').attr('id', `temp-${i}`);
+        const winds = $('<div>').addClass('weather-wind').attr('id', `wind-${i}`);
+        const humid = $('<div>').addClass('weather-humid').attr('id', `humid-${i}`);
+
+        col2.append(temp, winds, humid);
+        row2.append(col2);
+        row1.append(icon);
+        cardBody.append(row1, row2);
+        card.append(date, cardBody);
+        col1.append(card);
+        cardsContainer.append(col1);  
+      };
+
+      const forecastCards = (index) => {
+        return {
+          date: $(`#date-${index}`),
+          icon: $(`#icon-${index}`),
+          temp: $(`#temp-${index}`),
+          wind: $(`#wind-${index}`),
+          humid: $(`#humid-${index}`),
+        }
+      }  
+
+      filterData.forEach(function(data, index) {
+        const { weather, dt_txt: wdate, main, wind} = data;
+        
+          card({
+          cardType: forecastCards(index),
+          icon: weather[0].icon,
+          date: wdate,
+          temp: roundUpNumber(main.temp),
+          wind: roundUpNumber(wind.speed),
+          humid: main.humidity,
+        })
+
+      })
 
       return true;
 
