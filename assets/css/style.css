@@ -57,3 +57,8 @@
   flex-direction: column;
   justify-content: space-around;
 }
+
+/* HISTORY */
+.accordion-body > button {
+  margin: 5px;
+}
