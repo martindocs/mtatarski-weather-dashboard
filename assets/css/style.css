@@ -216,9 +216,21 @@
   transform: translateX(-40%);
 }
 
+@media (max-width: 1200px) {  
+  #forecast .col-md-2 {
+    flex: 0 0 20%;
+    max-width: 20%;
+  }
+}
+
 
 /* Styles for screens ≥ 768px */
 @media (max-width: 768px) {  
+  #forecast .col-md-2 {
+    flex: 0 0 25%;
+    max-width: 25%;
+  }
+
   .col-md-6.remove-gap{
     padding-right: 12px;
   }
@@ -253,6 +265,11 @@
 
 /* Styles for screens ≥ 576px */
 @media (max-width: 575px) {
+  #forecast .col-md-2 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
   #forecast .row {
     flex-direction: column;
   }

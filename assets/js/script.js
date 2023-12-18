@@ -237,7 +237,7 @@ $(document).ready(function() {
 
       // Generate five days forecast cards elements
       for(let i = 0; i < filterData.length; i++) {
-        const col1 = $('<div>').addClass('col col-sm-4 col-md-3 my-2');
+        const col1 = $('<div>').addClass('col col-sm-4 col-md-2 my-2');
         const card = $('<div>').addClass('card text-center');
         const date = $('<div>').addClass('card-header forecast-date').attr('id', `date-${i}`);
         const cardBody = $('<div>').addClass('card-body forecast-icon-pos');
@@ -315,6 +315,9 @@ $(document).ready(function() {
             setLocalStorage(searchInput);
           };
 
+          // Clear the search input
+          $('#search-input').val('');
+
           // Show the cards-container with a fade-in effect
           $('#cards-container').fadeIn(1000, function () {   
             $('#search-animation').removeClass('justify-content-center');
@@ -359,6 +362,9 @@ $(document).ready(function() {
             newButton(location.toLowerCase());      
             setLocalStorage(location);
           };
+
+          // Clear the search input
+          $(this).prev().val('');
 
           // Show the cards-container with a fade-in effect
           $('#cards-container').fadeIn(1000, function () {   
