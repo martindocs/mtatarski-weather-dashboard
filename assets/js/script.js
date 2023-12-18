@@ -11,7 +11,7 @@ $(document).ready(function() {
     }
     return storage === null ? [] : storage;
   }
-
+  
   // Check if the animation has occurred
   if (!animationOccurred) {
     // Hide the cards-container initially
@@ -171,7 +171,7 @@ $(document).ready(function() {
       }
 
       const data = await response.json();
-      // console.log(data)
+      console.log(data)
 
       const city = data.city;
       // const filterData = [];
@@ -280,7 +280,7 @@ $(document).ready(function() {
 
       // Create the forecast cards HTML elements
       for(let i = 0; i < filterData.length; i++) {
-        const col1 = $('<div>').addClass('col');
+        const col1 = $('<div>').addClass('col col-sm-4 col-md-3 my-2');
         const card = $('<div>').addClass('card text-center');
         const date = $('<div>').addClass('card-header forecast-date').attr('id', `date-${i}`);
         const cardBody = $('<div>').addClass('card-body forecast-icon-pos');
@@ -339,32 +339,32 @@ $(document).ready(function() {
     const searchInput = $('#search-input').val();    
 
     if(searchInput){      
-      // fetchData(searchInput).then((data) => {
+      fetchData(searchInput).then((data) => {
       
-      //   if(data){        
+        if(data){        
           
-      //     getLocalStorage();
+          getLocalStorage();
           
-      //     const history = getLocalStorage();    
+          const history = getLocalStorage();    
           
-      //     if(!history.includes(searchInput)) {
-      //       newButton(searchInput.toLowerCase());      
-      //       setLocalStorage(searchInput);
-      //     };
+          if(!history.includes(searchInput)) {
+            newButton(searchInput.toLowerCase());      
+            setLocalStorage(searchInput);
+          };
 
-      //     // Show the cards-container with a fade-in effect
-      //     $('#cards-container').fadeIn(1000, function () {   
-      //       $('#search-animation').removeClass('justify-content-center');
-      //     });
+          // Show the cards-container with a fade-in effect
+          $('#cards-container').fadeIn(1000, function () {   
+            $('#search-animation').removeClass('justify-content-center');
+          });
           
-      //     // Animation complete, set the flag to true
-      //     animationOccurred = true;
+          // Animation complete, set the flag to true
+          animationOccurred = true;
 
-      //   }else{      
-      //     feedbackMsg("No city found", 'red');
-      //     return;
-      //   }
-      // });     
+        }else{      
+          feedbackMsg("No city found", 'red');
+          return;
+        }
+      });     
 
       $('#cards-container').fadeIn(1000, function () {   
         $('#search-animation').removeClass('justify-content-center');
@@ -385,31 +385,31 @@ $(document).ready(function() {
     const location = $(this).prev().val();
     
     if(location){      
-      // fetchData(location).then((data) => {
+      fetchData(location).then((data) => {
       
-      //   if(data){        
+        if(data){        
           
-      //     getLocalStorage();
+          getLocalStorage();
           
-      //     const history = getLocalStorage();    
+          const history = getLocalStorage();    
           
-      //     if(!history.includes(location)) {
-      //       newButton(location.toLowerCase());      
-      //       setLocalStorage(location);
-      //     };
+          if(!history.includes(location)) {
+            newButton(location.toLowerCase());      
+            setLocalStorage(location);
+          };
 
-      //     // Show the cards-container with a fade-in effect
-      //     $('#cards-container').fadeIn(1000, function () {   
-      //       $('#search-animation').removeClass('justify-content-center');
-      //     });
+          // Show the cards-container with a fade-in effect
+          $('#cards-container').fadeIn(1000, function () {   
+            $('#search-animation').removeClass('justify-content-center');
+          });
           
-      //     // Animation complete, set the flag to true
-      //     animationOccurred = true;
+          // Animation complete, set the flag to true
+          animationOccurred = true;
 
-      //   }else{      
-      //     feedbackMsg("No city found", 'red');         
-      //   }
-      // });     
+        }else{      
+          feedbackMsg("No city found", 'red');         
+        }
+      });     
 
       $('#cards-container').fadeIn(1000, function () {   
         $('#search-animation').removeClass('justify-content-center');
@@ -427,8 +427,9 @@ $(document).ready(function() {
   // Event listeners for history buttons
   $('#accordion-body').on('click', '.locations', function() {
 
-    const location = $(this).attr('data-location');      
-    // fetchData(location);
+    const location = $(this).attr('data-location'); 
+    
+    fetchData(location);
     
     // Show the cards-container with a fade-in effect
     $('#cards-container').fadeIn(1000, function () {   
