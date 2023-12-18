@@ -1,6 +1,5 @@
-
 $(document).ready(function() { 
-  // Add this variable to keep track of whether the animation has occurred
+  // variable to keep track of whether the animation has occurred
   let animationOccurred = false;
 
   // Function to get data from the localStorage
@@ -14,12 +13,13 @@ $(document).ready(function() {
   
   // Check if the animation has occurred
   if (!animationOccurred) {
-    // Hide the cards-container initially
+    // Hide the #cards-container and move search input to center
+    // Only occurs on initially page load or page refresh
     $('#cards-container').hide();
     $('#search-animation').addClass('justify-content-center');
   }
 
-  // Function to set data in the localStorage
+  // Function to set/save data in the localStorage
   const setLocalStorage = (search) => {
     if(search){
       const getStorage = getLocalStorage();            
@@ -28,21 +28,21 @@ $(document).ready(function() {
     }
   }
   
-  // Function to create buttons
+  // Function to create buttons in history list
   const newButton = (search) => {
     const historyList = $('.accordion-body');
     
     // Remove existing 'No History' element if it exists
     $('#no-history').remove();
 
-    // Create buttons in the container history
+    // Generate buttons in the container history
     if(Array.isArray(search) && search.length > 0){
       search.forEach(function (item) {
         const button = createButton(item);      
         historyList.prepend(button);
       });
     }else{
-      // Create new button when user clicks/enter new location
+      // Create new button on user clicks/enter new location
       if(search.length === 0){                      
         const p =  $('<p>').attr('id', 'no-history').text('No History');
         historyList.prepend(p);
@@ -61,7 +61,7 @@ $(document).ready(function() {
   // Get the data from the localStorage on initialization
   const searchHistory = getLocalStorage();
 
-  // Display the search history
+  // Display the search history as buttons
   if(searchHistory !== null || searchHistory.length > 0){    
     newButton(searchHistory);    
   }
@@ -71,16 +71,13 @@ $(document).ready(function() {
     return Math.round(number * 100 / 100);
   }
 
-  // Function to convert timestamp to milliseconds and then get the Date
-  const getDate = (date) => {
-    return new Date(date * 1000);
-  }
-
+  // Function to get current time
   const calcTime = () => {
     const currentDate = new Date();    
     return `${currentDate.getHours()}:${currentDate.getMinutes()}`
   }
   
+  // Function to display feedback message to the user
   const feedbackMsg = (str, color) => {    
     const msg = $('#feedback-msg').text(str).css('color', color);  
     setTimeout(() => {
@@ -90,7 +87,8 @@ $(document).ready(function() {
 
   // Function to get the hours and minutes
   const sunSetSunRise = (time) => {
-    const date = new Date(time * 1000);
+    // convert timestamp to milliseconds and then get the Date
+    const date = new Date(time * 1000); 
     const hours = date.getHours();
     const minutes = date.getMinutes().toString().padStart(2, '0');
     return hours + ':' + minutes;
@@ -139,10 +137,10 @@ $(document).ready(function() {
     if(population) cardType.population.text(`Population: ${population} people`);
   }
   
-  // Function to fetch weather data
+  // Function fetch the Weather data
   const fetchData = async (searchInput) => {
 
-    // Elements for the main card
+    // The main card
     const mainCard = {
       city: $('#search-city'), 
       icon: $('#main-icon'),
@@ -165,7 +163,7 @@ $(document).ready(function() {
     // API key
     const apiKey = '61accb2975e7eb205d195492e4e98f62';
 
-    // Bulding query parameters
+    // Query parameters
     const queryUrl = 'https://api.openweathermap.org/data/2.5/forecast?q=' + searchInput + '&appid=' + apiKey + '&units=metric';
 
     try{
@@ -176,57 +174,15 @@ $(document).ready(function() {
       }
 
       const data = await response.json();
-      console.log(data)
-
-      const city = data.city;
-      // const filterData = [];
-      // let currentWeather = null;
+      
+      const city = data.city;      
       const currentDate = new Date(); // Get the current date    
-
-      // data.list.forEach((time) => {
-      //   // Convert timestamp to date
-      //   const entryDate = getDate(time.dt);
-       
-      //   // If the entry is for the current day and currentWeather is not assigned yet
-      //   if((entryDate.getDate() === currentDate.getDate() || entryDate.getDate() === currentDate.getDate() + 1) && currentWeather === null) {
-      //     currentWeather = time;
-      //   }
-
-      //   // If the entry is at 12 PM and not for the current day, include it in forecastData
-      //   if (entryDate.getHours() === 12 && entryDate.getDate() !== currentDate.getDate()) {
-      //     filterData.push(time);
-      //   }           
-      // });
-
-
-      // const currentWeather = data.list.reduce((closest, entry) => {
-      //   const entryDate = new Date(entry.dt * 1000);
-      
-      //   if (
-      //     entryDate.getDate() === currentDate.getDate() &&
-      //     Math.abs(entryDate.getHours() - currentDate.getHours()) < Math.abs(closest.dt - currentDate.getTime())
-      //   ) {
-      //     return entry;
-      //   }
-      
-      //   return closest;
-      // }, data.list[0]);
-
-      // let currentWeather = data.list[0]; // Initialize with the first entry
-
-      // for (const entry of data.list) {
-      //   const entryDate = new Date(entry.dt * 1000);        
-      //   // the time difference in milliseconds between the two dates.
-      //   const timeDifference = Math.abs(entryDate - currentDate);
-
-      //   if (entryDate.getDate() === currentDate.getDate() && timeDifference < Math.abs(currentWeather.dt - currentDate)) {
-      //     currentWeather = entry;
-      //   }
-      // }
 
       let currentWeather = data.list[0]; // Initialize with the first entry
 
+      // Get current weather information
       for (const entry of data.list) {
+        // convert timestamp to milliseconds and then get the Date
         const entryDate = new Date(entry.dt * 1000);
 
         if (
@@ -237,12 +193,12 @@ $(document).ready(function() {
           currentWeather = entry;
         }
       }
-      
-     
+           
+      // Get forecast weather data 
       const filterData = [];
       const includedDays = [];
-
       data.list.forEach(entry => {
+        // convert timestamp to milliseconds and then get the Date
         const entryDate = new Date(entry.dt * 1000);
         const entryDay = entryDate.getDate();
 
@@ -252,14 +208,10 @@ $(document).ready(function() {
         }
       });
       
-      // console.log(currentWeather)
-      // console.log(filterData)
-
-
-      // const { weather, dt_txt: wdate, main, wind, visibility } = filterData[0];
+      // Destructuring the fetched data
       const { weather, dt_txt: wdate, main, wind, visibility } = currentWeather;
 
-      // Populate the data for the main card
+      // Populate data for the main card
       card({
         cardType: mainCard,
         city: city.name,
@@ -281,9 +233,9 @@ $(document).ready(function() {
       });
      
       const cardsContainer = $('#forecast .row');  
-      cardsContainer.empty();
+      cardsContainer.empty(); // clear the container before rendering the forecast
 
-      // Create the forecast cards HTML elements
+      // Generate five days forecast cards elements
       for(let i = 0; i < filterData.length; i++) {
         const col1 = $('<div>').addClass('col col-sm-4 col-md-3 my-2');
         const card = $('<div>').addClass('card text-center');
@@ -306,6 +258,7 @@ $(document).ready(function() {
         cardsContainer.append(col1);  
       };
 
+      // Forecast card
       const forecastCards = (index) => {
         return {
           date: $(`#date-${index}`),
@@ -316,8 +269,9 @@ $(document).ready(function() {
         }
       }    
       
-      // Populate the forecast cards
+      // Populate forecast cards with weather data
       filterData.forEach(function(data, index) {
+        // Destructure weather data
         const { weather, dt_txt: wdate, main, wind} = data;        
           card({
           cardType: forecastCards(index),
@@ -329,29 +283,33 @@ $(document).ready(function() {
         })
       });
 
-      return true;
+      return true; // if current weather and five days forecast
 
     }catch(error){
-      console.log(error)
-      return false;
+      console.log(error);
+      return false; // if city not found or weather not found
     }    
   };
 
-  // Event listener for search results
+
+  // Event listener for submit results
   $('#search-form').on('submit', function(e) {
     e.preventDefault();
     // Search input
     const searchInput = $('#search-input').val();    
-
+    
+    // If entry is not empty
     if(searchInput){      
-      fetchData(searchInput).then((data) => {
-      
+      fetchData(searchInput).then((data) => {      
         if(data){        
           
+          // Get the localStorage before saving new search
           getLocalStorage();
           
           const history = getLocalStorage();    
           
+          // Save the search entry only if is not existing in localStorage
+          // and create new button for history list
           if(!history.includes(searchInput)) {
             newButton(searchInput.toLowerCase());      
             setLocalStorage(searchInput);
@@ -366,38 +324,37 @@ $(document).ready(function() {
           animationOccurred = true;
 
         }else{      
+          // Otherwise show error message
           feedbackMsg("No city found", 'red');
           return;
         }
       });     
 
-      $('#cards-container').fadeIn(1000, function () {   
-        $('#search-animation').removeClass('justify-content-center');
-      });
-      
-      // Animation complete, set the flag to true
-      animationOccurred = true;
-
     }else{
+      // If fetch data was unsuccessful with 404 code, no city found
       feedbackMsg("Please enter city name", 'red');
     }
-
   });
 
 
+  // Event listener for search button click
   $('#button-search').on('click', function(){
-
+    // Get search input text
     const location = $(this).prev().val();
     
+    // If the search input is not empty
     if(location){      
       fetchData(location).then((data) => {
       
         if(data){        
           
+          // Get the localStorage before saving new search
           getLocalStorage();
           
           const history = getLocalStorage();    
           
+          // Save the search entry only if is not existing in localStorage
+          // and create new button for history list
           if(!history.includes(location)) {
             newButton(location.toLowerCase());      
             setLocalStorage(location);
@@ -411,29 +368,26 @@ $(document).ready(function() {
           // Animation complete, set the flag to true
           animationOccurred = true;
 
-        }else{      
+        }else{     
+          // Otherwise show error message 
           feedbackMsg("No city found", 'red');         
         }
-      });     
-
-      $('#cards-container').fadeIn(1000, function () {   
-        $('#search-animation').removeClass('justify-content-center');
-      });
-      
-      // Animation complete, set the flag to true
-      animationOccurred = true;
+      });       
 
     }else{
+      // If fetch data was unsuccessful with 404 code, no city found
       feedbackMsg("Please enter city name", 'red');
     }
     
   });
 
-  // Event listeners for history buttons
-  $('#accordion-body').on('click', '.locations', function() {
 
+  // Event listeners for history list buttons
+  $('#accordion-body').on('click', '.locations', function() {
+    // Get search input text
     const location = $(this).attr('data-location'); 
     
+    // fetch data from Weather API
     fetchData(location);
     
     // Show the cards-container with a fade-in effect
@@ -442,8 +396,6 @@ $(document).ready(function() {
     });
 
     // Animation complete, set the flag to true
-    animationOccurred = true;
-    
+    animationOccurred = true;    
   });
-
 });
