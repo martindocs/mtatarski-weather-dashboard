@@ -76,6 +76,11 @@ $(document).ready(function() {
     return new Date(date * 1000);
   }
 
+  const calcTime = () => {
+    const currentDate = new Date();    
+    return `${currentDate.getHours()}:${currentDate.getMinutes()}`
+  }
+  
   const feedbackMsg = (str, color) => {    
     const msg = $('#feedback-msg').text(str).css('color', color);  
     setTimeout(() => {
@@ -120,7 +125,7 @@ $(document).ready(function() {
     }
     if(desc) cardType.desc.text(desc);
     if(date) cardType.date.text(date.split(' ')[0]);
-    if(time) cardType.time.text(date.split(/[ :]/).slice(1,3).join(':'));
+    if(time) cardType.time.text(calcTime);
     if(temp) cardType.temp.text(temp + '\u00B0C');
     if(hiTemp) cardType.hiTemp.text(`Hi ${hiTemp}`);
     if(lowTemp) cardType.lowTemp.text(`Lo ${lowTemp}`);
