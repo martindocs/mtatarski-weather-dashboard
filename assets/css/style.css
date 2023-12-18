@@ -181,6 +181,7 @@ body{
   margin-top: 30px;
   padding-bottom: 10px;
   font-weight: 600;
+  width: 85%;
 }
 
 #forecast .card {
@@ -224,6 +225,9 @@ body{
   #forecast .col-md-2 {
     flex: 0 0 20%;
     max-width: 20%;
+  }
+  .forecast-header {
+    width: 100%;
   }
 }
 
