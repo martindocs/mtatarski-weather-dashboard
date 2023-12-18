@@ -119,7 +119,7 @@ $(document).ready(function() {
     
     if(city) cardType.city.text(city);
     if(icon) {
-      cardType.icon.attr('src', `http://openweathermap.org/img/wn/${icon}@2x.png`);
+      cardType.icon.attr('src', `https://openweathermap.org/img/wn/${icon}@2x.png`);
       cardType.icon.attr('alt', desc);
     }
     if(desc) cardType.desc.text(desc);
@@ -165,7 +165,7 @@ $(document).ready(function() {
     const apiKey = '61accb2975e7eb205d195492e4e98f62';
 
     // Query parameters
-    const queryUrl = 'https://api.openweathermap.org/data/2.5/forecast?q=' + searchInput + '&appid=' + apiKey + '&units=metric';
+    const queryUrl = 'http://api.openweathermap.org/data/2.5/forecast?q=' + searchInput + '&appid=' + apiKey + '&units=metric';
 
     try{
       const response = await fetch(queryUrl);
@@ -303,7 +303,7 @@ $(document).ready(function() {
     if(searchInput){      
       fetchData(searchInput).then((data) => {      
         if(data){        
-          
+         
           // Get the localStorage before saving new search
           getLocalStorage();
           
@@ -351,7 +351,7 @@ $(document).ready(function() {
       fetchData(location).then((data) => {
       
         if(data){        
-          
+         
           // Get the localStorage before saving new search
           getLocalStorage();
           
