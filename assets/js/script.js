@@ -331,23 +331,21 @@ $(document).ready(function() {
     // Search input
     const searchInput = $('#search-input').val();
 
-    if(searchInput){
-
+    if(searchInput){      
+      // fetchData(searchInput).then((data) => {
       
-      fetchData(searchInput).then((data) => {
-      
-        if(data){        
+      //   if(data){        
           
-          getLocalStorage();
+      //     getLocalStorage();
           
-          const history = getLocalStorage();    
+      //     const history = getLocalStorage();    
           
-          if(!history.includes(searchInput)) {
-            newButton(searchInput.toLowerCase());      
-            setLocalStorage(searchInput)
-          };
-        }
-      });
+      //     if(!history.includes(searchInput)) {
+      //       newButton(searchInput.toLowerCase());      
+      //       setLocalStorage(searchInput)
+      //     };
+      //   }
+      // });
       
       // Show the cards-container with a fade-in effect
       $('#cards-container').fadeIn(1000, function () {   
@@ -360,10 +358,29 @@ $(document).ready(function() {
 
   });
 
+
+  $('#button-search').on('click', function(){
+
+    const location = $(this).prev().val();
+
+    if(location){
+      // fetchData(location);
+
+      // Show the cards-container with a fade-in effect
+      $('#cards-container').fadeIn(1000, function () {   
+        $('#search-animation').removeClass('justify-content-center');
+      });
+
+      // Animation complete, set the flag to true
+      animationOccurred = true;
+    }
+    
+  });
+
   // Event listeners for history buttons
   $('#accordion-body').on('click', '.locations', function() {
 
-    // const location = $(this).attr('data-location');    
+    const location = $(this).attr('data-location');    
     // fetchData(location);
   
     // Show the cards-container with a fade-in effect
@@ -375,5 +392,7 @@ $(document).ready(function() {
     animationOccurred = true;
     
   });
+
+
 
 });
