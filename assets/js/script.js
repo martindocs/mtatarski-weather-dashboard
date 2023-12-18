@@ -1,3 +1,6 @@
+// Add this variable to keep track of whether the animation has occurred
+let animationOccurred = false;
+
 $(document).ready(function() { 
   // Function to get data from the localStorage
   const getLocalStorage = () => {
@@ -6,6 +9,28 @@ $(document).ready(function() {
       localStorage.setItem('locations', JSON.stringify([]));
     }
     return storage === null ? [] : storage;
+  }
+
+  // Check if the animation has occurred
+  if (!animationOccurred) {
+    // Hide the cards-container initially
+    $('#cards-container').hide();
+    $('#search-animation').addClass('justify-content-center');
+
+    // Event listeners for history buttons
+    $('#accordion-body').on('click', '.locations', function() {
+    
+      animationOccurred = true;
+      $('#search-animation').removeClass('justify-content-center');
+      $('#cards-container').show();  
+
+      // Animation complete, set the flag to true
+      animationOccurred = true;
+      
+      // const location = $(this).attr('data-location');    
+      // fetchData(location);      
+    })
+  
   }
 
   // Function to set data in the localStorage
@@ -337,11 +362,12 @@ $(document).ready(function() {
 
   });
 
-  // Event listeners for history buttons
-  $('#accordion-body').on('click', '.locations', function() {
+  // // Event listeners for history buttons
+  // $('#accordion-body').on('click', '.locations', function() {
 
-    const location = $(this).attr('data-location');    
-    fetchData(location);
+  //   const location = $(this).attr('data-location');    
+  //   fetchData(location);
     
-  })
+  // })
+
 });

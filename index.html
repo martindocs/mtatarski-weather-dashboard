@@ -17,7 +17,7 @@
   </header>
 
   <div class="container-fluid pt-4" style="max-width: 1400px">
-    <div class="row mt-3">
+    <div class="row mt-3" id="search-animation">
       <aside class="col-lg-3">
        
         <!-- Search  -->
@@ -46,32 +46,32 @@
       </aside>
 
       <!-- Five days forecast -->
-      <div class="col-lg-9 lg-mt-3">
+      <div class="col-lg-9 lg-mt-3 cards-container" id="cards-container">
         <section id="main" class="main mb-4">
           <div class="row justify-content-lg-start justify-content-md-center">
             <div class="col-md-6 pe-0">
               <!-- Current weather information -->
                 <div class="card main-card">
-                  <div class="card-header search-city" id="search-city">London</div>
+                  <div class="card-header search-city" id="search-city"></div>
                   <div class="card-body">
                     <div class="row">
                       <div class="col-4">
-                        <img class="main-icon" id="main-icon" src="./assets/icon.png">
-                        <p class="main-desc" id="main-desc">overcast clouds</p>
+                        <img class="main-icon" id="main-icon" src="">
+                        <p class="main-desc" id="main-desc"></p>
                       </div>
                       <div class="col">  
-                        <p id="main-date" class="main-date">2023-12-17</p>
+                        <p id="main-date" class="main-date"></p>
                         <p id="main-time" class="main-time"></p>             
                         <div class="row">
                           <div class="col text-center">
-                            <div class="main-temp" id="main-temp">10°C</div>
-                            <div id="main-temp-hi">Hi 10°C</div>
-                            <div id="main-temp-low">Lo 10°C</div>
+                            <div class="main-temp" id="main-temp"></div>
+                            <div id="main-temp-hi"></div>
+                            <div id="main-temp-low"></div>
                           </div>
                           <div class="col mt-2 main-details">                  
-                            <div id="main-feels">Feels like: 9°C</div>
-                            <div id="main-humid">Humidity: 71%</div>
-                            <div id="main-wind">Wind: 6 km/h</div>
+                            <div id="main-feels"></div>
+                            <div id="main-humid"></div>
+                            <div id="main-wind"></div>
                           </div>
                         </div>
                       </div>
@@ -84,11 +84,11 @@
                 <div class="card card-details">
                   <div class="d-flex card-header details-header">Details</div>
                   <div class="card-body details-body">
-                    <div id="main-sunrise">Sunrise: 8:00</div>
-                    <div id="main-sunset">Sunset: 15:51</div>
-                    <div id="main-pressure">Presure: 1034 hPa</div>
-                    <div id="main-visible">Visibility: 10000 km</div>
-                    <div id="main-population">Population: 10,000,000 people</div>
+                    <div id="main-sunrise"></div>
+                    <div id="main-sunset"></div>
+                    <div id="main-pressure"></div>
+                    <div id="main-visible"></div>
+                    <div id="main-population"></div>
                   </div>
                 </div>
             </div>            
