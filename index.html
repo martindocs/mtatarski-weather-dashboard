@@ -16,44 +16,16 @@
     <h1>Weather Dashboard</h1>
   </header>
 
-  <div class="container-fluid" style="max-width: 1400px">
+  <div class="container-fluid pt-4" style="max-width: 1400px">
     <div class="row mt-3">
       <aside class="col-lg-3">
-
-        <!-- Current weather information -->
-        <!-- <div class="card">
-          <div class="card-header text-center" id="current-city">City name</div>
-          <div class="card-body">
-            <div class="row">
-              <div class="col">
-                <span id="current-icon">icon</span>
-                <p id="current-desc">cloudy</p>
-              </div>
-              <div class="col">               
-                <p id="current-date">Aug 31 2023</p>
-                <div class="row">
-                  <div class="col">
-                    <div id="current-temp">20C</div>
-                    <div id="current-temp-hi">Hi 29</div>
-                    <div id="current-temp-low">Low 24</div>
-                  </div>
-                  <div class="col">                  
-                    <div id="current-feels">Feels like: 20</div>
-                    <div id="current-humid">Humidity: 20</div>
-                    <div id="current-wind">Wind: 20</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> -->
        
         <!-- Search  -->
         <form id="search-form">
           <div class="input-group mb-3">
-            <input type="text" class="form-control" id="search-input" placeholder="Search for a city" aria-label="search" aria-describedby="button-search">
+            <input type="text" class="form-control search-input" id="search-input" placeholder="Search for a city" aria-label="search" aria-describedby="button-search">
 
-            <button class="btn btn-primary" type="button" id="button-search">Search</button>
+            <button class="btn btn-primary button-search" type="button" id="button-search">Search</button>
           </div>          
         </form>       
 
@@ -87,8 +59,9 @@
                         <img class="main-icon" id="main-icon" src="./assets/icon.png">
                         <p class="main-desc" id="main-desc">overcast clouds</p>
                       </div>
-                      <div class="col">               
-                        <p class="main-date" id="main-date">2023-12-17</p>
+                      <div class="col">  
+                        <p id="main-date" class="main-date">2023-12-17</p>
+                        <p id="main-time" class="main-time"></p>             
                         <div class="row">
                           <div class="col text-center">
                             <div class="main-temp" id="main-temp">10°C</div>
@@ -105,7 +78,6 @@
                     </div>
                   </div>
                 </div>
-
             </div>
 
             <div class="col-md-3 ps-0">
@@ -119,110 +91,15 @@
                     <div id="main-population">Population: 10,000,000 people</div>
                   </div>
                 </div>
-
             </div>            
+                   
           </div>
         </section>
 
         <section id="forecast">
-          <div>5 Day Forecast</div>
+          <div class="forecast-header text-center">5 Day Forecast</div>
           <div class="row">
-
-            <!-- <div class="col" data-column="1">              
-              <div class="card">
-                <div class="card-header weather-date">Date</div>
-                <div class="card-body">
-                  <div class="row">
-                    <span class="weather-icon">icon</span>                
-                    <div class="weather-temp">27C</div>
-                  </div>
-                  <div class="row">
-                    <div class="col">
-                      <div class="weather-temp">Temp: 20</div>
-                      <div class="weather-wind">Wind: 20</div>
-                      <div class="weather-humid">Humidity: 20</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col">              
-              <div class="card">
-                <div class="card-header weather-date">Date</div>
-                <div class="card-body">
-                  <div class="row">
-                    <span class="weather-icon">icon</span>                
-                    <div class="weather-temp">27C</div>
-                  </div>
-                  <div class="row">
-                    <div class="col">
-                      <div class="weather-temp">Temp: 20</div>
-                      <div class="weather-wind">Wind: 20</div>
-                      <div class="weather-humid">Humidity: 20</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col">              
-              <div class="card">
-                <div class="card-header weather-date">Date</div>
-                <div class="card-body">
-                  <div class="row">
-                    <span class="weather-icon">icon</span>                
-                    <div class="weather-temp">27C</div>
-                  </div>
-                  <div class="row">
-                    <div class="col">
-                      <div class="weather-temp">Temp: 20</div>
-                      <div class="weather-wind">Wind: 20</div>
-                      <div class="weather-humid">Humidity: 20</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col">              
-              <div class="card">
-                <div class="card-header weather-date">Date</div>
-                <div class="card-body">
-                  <div class="row">
-                    <span class="weather-icon">icon</span>                
-                    <div class="weather-temp">27C</div>
-                  </div>
-                  <div class="row">
-                    <div class="col">
-                      <div class="weather-temp">Temp: 20</div>
-                      <div class="weather-wind">Wind: 20</div>
-                      <div class="weather-humid">Humidity: 20</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col">              
-              <div class="card">
-                <div class="card-header weather-date">Date</div>
-                <div class="card-body">
-                  <div class="row">
-                    <span class="weather-icon">icon</span>                
-                    <div class="weather-temp">27C</div>
-                  </div>
-                  <div class="row">
-                    <div class="col">
-                      <div class="weather-temp">Temp: 20</div>
-                      <div class="weather-wind">Wind: 20</div>
-                      <div class="weather-humid">Humidity: 20</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div> -->
-
+            
           </div>
         </section>
       </div>

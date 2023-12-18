@@ -1,5 +1,4 @@
-$(document).ready(function() {
-
+$(document).ready(function() { 
   // Function to get data from the localStorage
   const getLocalStorage = () => {
     const storage = JSON.parse(localStorage.getItem('locations'));
@@ -82,6 +81,7 @@ $(document).ready(function() {
       icon, 
       desc,
       date, 
+      time,
       temp, 
       hiTemp, 
       lowTemp,
@@ -94,7 +94,7 @@ $(document).ready(function() {
       visible,
       population,
     } = args[0];
-  
+    
     if(city) cardType.city.text(city);
     if(icon) {
       cardType.icon.attr('src', `http://openweathermap.org/img/wn/${icon}@2x.png`);
@@ -102,6 +102,7 @@ $(document).ready(function() {
     }
     if(desc) cardType.desc.text(desc);
     if(date) cardType.date.text(date.split(' ')[0]);
+    if(time) cardType.time.text(date.split(/[ :]/).slice(1,3).join(':'));
     if(temp) cardType.temp.text(temp + '\u00B0C');
     if(hiTemp) cardType.hiTemp.text(`Hi ${hiTemp}`);
     if(lowTemp) cardType.lowTemp.text(`Lo ${lowTemp}`);
@@ -124,6 +125,7 @@ $(document).ready(function() {
       icon: $('#main-icon'),
       desc: $('#main-desc'),
       date: $('#main-date'),
+      time: $('#main-time'),
       temp: $('#main-temp'),
       hiTemp: $('#main-temp-hi'),
       lowTemp: $('#main-temp-low'),
@@ -146,32 +148,87 @@ $(document).ready(function() {
     try{
       const response = await fetch(queryUrl);
 
-      if (!response.ok) {
+      if (!response.ok) {       
         return false;
       }
 
       const data = await response.json();
+      // console.log(data)
 
       const city = data.city;
-      const filterData = [];
-      let currentWeather = null;
-      const currentDate = new Date(); // Get the current date
+      // const filterData = [];
+      // let currentWeather = null;
+      const currentDate = new Date(); // Get the current date    
 
-      data.list.forEach((time) => {
-        // Convert timestamp to date
-        const entryDate = getDate(time.dt);
+      // data.list.forEach((time) => {
+      //   // Convert timestamp to date
+      //   const entryDate = getDate(time.dt);
        
-        // If the entry is for the current day and currentWeather is not assigned yet
-        if(entryDate.getDate() === currentDate.getDate() && currentWeather === null) {
-          currentWeather = time;
+      //   // If the entry is for the current day and currentWeather is not assigned yet
+      //   if((entryDate.getDate() === currentDate.getDate() || entryDate.getDate() === currentDate.getDate() + 1) && currentWeather === null) {
+      //     currentWeather = time;
+      //   }
+
+      //   // If the entry is at 12 PM and not for the current day, include it in forecastData
+      //   if (entryDate.getHours() === 12 && entryDate.getDate() !== currentDate.getDate()) {
+      //     filterData.push(time);
+      //   }           
+      // });
+
+
+      // const currentWeather = data.list.reduce((closest, entry) => {
+      //   const entryDate = new Date(entry.dt * 1000);
+      
+      //   if (
+      //     entryDate.getDate() === currentDate.getDate() &&
+      //     Math.abs(entryDate.getHours() - currentDate.getHours()) < Math.abs(closest.dt - currentDate.getTime())
+      //   ) {
+      //     return entry;
+      //   }
+      
+      //   return closest;
+      // }, data.list[0]);
+
+      // let currentWeather = data.list[0]; // Initialize with the first entry
+
+      // for (const entry of data.list) {
+      //   const entryDate = new Date(entry.dt * 1000);        
+      //   // the time difference in milliseconds between the two dates.
+      //   const timeDifference = Math.abs(entryDate - currentDate);
+
+      //   if (entryDate.getDate() === currentDate.getDate() && timeDifference < Math.abs(currentWeather.dt - currentDate)) {
+      //     currentWeather = entry;
+      //   }
+      // }
+
+      let currentWeather = data.list[0]; // Initialize with the first entry
+
+      for (const entry of data.list) {
+        const entryDate = new Date(entry.dt * 1000);
+
+        if (
+          entryDate.getDate() === currentDate.getDate() &&
+          // the time difference in milliseconds between the two dates.
+          Math.abs(entryDate - currentDate) < Math.abs(currentWeather.dt - currentDate)
+        ) {
+          currentWeather = entry;
         }
+      }
+      
+     
+      const filterData = [];
+      const includedDays = [];
 
-        // If the entry is at 12 PM and not for the current day, include it in forecastData
-        if (entryDate.getHours() === 12 && entryDate.getDate() !== currentDate.getDate()) {
-          filterData.push(time);
-        }           
+      data.list.forEach(entry => {
+        const entryDate = new Date(entry.dt * 1000);
+        const entryDay = entryDate.getDate();
+
+        if (entryDay !== currentDate.getDate() && !includedDays.includes(entryDay)) {
+          filterData.push(entry);
+          includedDays.push(entryDay);
+        }
       });
-
+      
       // console.log(currentWeather)
       // console.log(filterData)
 
@@ -186,6 +243,7 @@ $(document).ready(function() {
         icon: weather[0].icon,
         desc: weather[0].description,
         date: wdate,
+        time: wdate,
         temp: roundUpNumber(main.temp),
         hiTemp: roundUpNumber(main.temp_max),
         lowTemp: roundUpNumber(main.temp_min),
@@ -205,20 +263,20 @@ $(document).ready(function() {
       // Create the forecast cards HTML elements
       for(let i = 0; i < filterData.length; i++) {
         const col1 = $('<div>').addClass('col');
-        const card = $('<div>').addClass('card');
-        const date = $('<div>').addClass('card-header weather-date').attr('id', `date-${i}`);
-        const cardBody = $('<div>').addClass('card-body');
-        const row1 = $('<div>').addClass('row');
-        const icon = $('<img>').addClass('weather-icon').attr('src', weather[0].icon).attr('alt', `weather icon ${weather[0].description}`).attr('id', `icon-${i}`);       
+        const card = $('<div>').addClass('card text-center');
+        const date = $('<div>').addClass('card-header forecast-date').attr('id', `date-${i}`);
+        const cardBody = $('<div>').addClass('card-body forecast-icon-pos');
+        const row1 = $('<div>').addClass('row ');
+        const icon = $('<img>').addClass('forecast-icon').attr('src', weather[0].icon).attr('alt', `forecast icon ${weather[0].description}`).attr('id', `icon-${i}`);       
+        const temp = $('<div>').addClass('forecast-temp').attr('id', `temp-${i}`);
         const row2 = $('<div>').addClass('row');
         const col2 = $('<div>').addClass('col');
-        const temp = $('<div>').addClass('weather-temp').attr('id', `temp-${i}`);
-        const winds = $('<div>').addClass('weather-wind').attr('id', `wind-${i}`);
-        const humid = $('<div>').addClass('weather-humid').attr('id', `humid-${i}`);
+        const winds = $('<div>').addClass('forecast-wind').attr('id', `wind-${i}`);
+        const humid = $('<div>').addClass('forecast-humid').attr('id', `humid-${i}`);
 
-        col2.append(temp, winds, humid);
+        col2.append(winds, humid);
         row2.append(col2);
-        row1.append(icon);
+        row1.append(icon, temp);
         cardBody.append(row1, row2);
         card.append(date, cardBody);
         col1.append(card);
@@ -251,6 +309,7 @@ $(document).ready(function() {
       return true;
 
     }catch(error){
+      console.log(error)
       return false;
     }    
   };
@@ -258,12 +317,13 @@ $(document).ready(function() {
   // Event listener for search results
   $('#search-form').on('submit', function(e) {
     e.preventDefault();
-    
     // Search input
     const searchInput = $('#search-input').val();
-  
+    
     fetchData(searchInput).then((data) => {
+      console.log(data)
       if(data){        
+        console.log(data)
         getLocalStorage();
     
         const history = getLocalStorage();    
