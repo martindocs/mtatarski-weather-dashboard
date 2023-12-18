@@ -74,7 +74,8 @@ $(document).ready(function() {
   // Function to get current time
   const calcTime = () => {
     const currentDate = new Date();    
-    return `${currentDate.getHours()}:${currentDate.getMinutes()}`
+    const minutes = currentDate.getMinutes() < 10 ? `0${currentDate.getMinutes()}` : currentDate.getMinutes();
+    return `${currentDate.getHours()}:${minutes}`
   }
   
   // Function to display feedback message to the user
