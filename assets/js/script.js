@@ -76,6 +76,13 @@ $(document).ready(function() {
     return new Date(date * 1000);
   }
 
+  const feedbackMsg = (str, color) => {    
+    const msg = $('#feedback-msg').text(str).css('color', color);  
+    setTimeout(() => {
+      msg.text('');
+    }, 2000);    
+  }
+
   // Function to get the hours and minutes
   const sunSetSunRise = (time) => {
     const date = new Date(time * 1000);
@@ -329,7 +336,7 @@ $(document).ready(function() {
   $('#search-form').on('submit', function(e) {
     e.preventDefault();
     // Search input
-    const searchInput = $('#search-input').val();
+    const searchInput = $('#search-input').val();    
 
     if(searchInput){      
       // fetchData(searchInput).then((data) => {
@@ -342,18 +349,32 @@ $(document).ready(function() {
           
       //     if(!history.includes(searchInput)) {
       //       newButton(searchInput.toLowerCase());      
-      //       setLocalStorage(searchInput)
+      //       setLocalStorage(searchInput);
       //     };
+
+      //     // Show the cards-container with a fade-in effect
+      //     $('#cards-container').fadeIn(1000, function () {   
+      //       $('#search-animation').removeClass('justify-content-center');
+      //     });
+          
+      //     // Animation complete, set the flag to true
+      //     animationOccurred = true;
+
+      //   }else{      
+      //     feedbackMsg("No city found", 'red');
+      //     return;
       //   }
-      // });
-      
-      // Show the cards-container with a fade-in effect
+      // });     
+
       $('#cards-container').fadeIn(1000, function () {   
         $('#search-animation').removeClass('justify-content-center');
       });
       
       // Animation complete, set the flag to true
       animationOccurred = true;
+
+    }else{
+      feedbackMsg("Please enter city name", 'red');
     }
 
   });
@@ -362,17 +383,43 @@ $(document).ready(function() {
   $('#button-search').on('click', function(){
 
     const location = $(this).prev().val();
+    
+    if(location){      
+      // fetchData(location).then((data) => {
+      
+      //   if(data){        
+          
+      //     getLocalStorage();
+          
+      //     const history = getLocalStorage();    
+          
+      //     if(!history.includes(location)) {
+      //       newButton(location.toLowerCase());      
+      //       setLocalStorage(location);
+      //     };
 
-    if(location){
-      // fetchData(location);
+      //     // Show the cards-container with a fade-in effect
+      //     $('#cards-container').fadeIn(1000, function () {   
+      //       $('#search-animation').removeClass('justify-content-center');
+      //     });
+          
+      //     // Animation complete, set the flag to true
+      //     animationOccurred = true;
 
-      // Show the cards-container with a fade-in effect
+      //   }else{      
+      //     feedbackMsg("No city found", 'red');         
+      //   }
+      // });     
+
       $('#cards-container').fadeIn(1000, function () {   
         $('#search-animation').removeClass('justify-content-center');
       });
-
+      
       // Animation complete, set the flag to true
       animationOccurred = true;
+
+    }else{
+      feedbackMsg("Please enter city name", 'red');
     }
     
   });
@@ -380,9 +427,9 @@ $(document).ready(function() {
   // Event listeners for history buttons
   $('#accordion-body').on('click', '.locations', function() {
 
-    const location = $(this).attr('data-location');    
+    const location = $(this).attr('data-location');      
     // fetchData(location);
-  
+    
     // Show the cards-container with a fade-in effect
     $('#cards-container').fadeIn(1000, function () {   
       $('#search-animation').removeClass('justify-content-center');
@@ -392,7 +439,5 @@ $(document).ready(function() {
     animationOccurred = true;
     
   });
-
-
 
 });
