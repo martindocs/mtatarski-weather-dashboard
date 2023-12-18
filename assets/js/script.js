@@ -1,7 +1,8 @@
-// Add this variable to keep track of whether the animation has occurred
-let animationOccurred = false;
 
 $(document).ready(function() { 
+  // Add this variable to keep track of whether the animation has occurred
+  let animationOccurred = false;
+
   // Function to get data from the localStorage
   const getLocalStorage = () => {
     const storage = JSON.parse(localStorage.getItem('locations'));
@@ -16,21 +17,6 @@ $(document).ready(function() {
     // Hide the cards-container initially
     $('#cards-container').hide();
     $('#search-animation').addClass('justify-content-center');
-
-    // Event listeners for history buttons
-    $('#accordion-body').on('click', '.locations', function() {
-    
-      animationOccurred = true;
-      $('#search-animation').removeClass('justify-content-center');
-      $('#cards-container').show();  
-
-      // Animation complete, set the flag to true
-      animationOccurred = true;
-      
-      // const location = $(this).attr('data-location');    
-      // fetchData(location);      
-    })
-  
   }
 
   // Function to set data in the localStorage
@@ -344,30 +330,50 @@ $(document).ready(function() {
     e.preventDefault();
     // Search input
     const searchInput = $('#search-input').val();
-    
-    fetchData(searchInput).then((data) => {
-      console.log(data)
-      if(data){        
-        console.log(data)
-        getLocalStorage();
-    
-        const history = getLocalStorage();    
-                
-        if(!history.includes(searchInput)) {
-          newButton(searchInput.toLowerCase());      
-          setLocalStorage(searchInput)
-        };
-      }
-    })
+
+    if(searchInput){
+
+      
+      fetchData(searchInput).then((data) => {
+      
+        if(data){        
+          
+          getLocalStorage();
+          
+          const history = getLocalStorage();    
+          
+          if(!history.includes(searchInput)) {
+            newButton(searchInput.toLowerCase());      
+            setLocalStorage(searchInput)
+          };
+        }
+      });
+      
+      // Show the cards-container with a fade-in effect
+      $('#cards-container').fadeIn(1000, function () {   
+        $('#search-animation').removeClass('justify-content-center');
+      });
+      
+      // Animation complete, set the flag to true
+      animationOccurred = true;
+    }
 
   });
 
-  // // Event listeners for history buttons
-  // $('#accordion-body').on('click', '.locations', function() {
+  // Event listeners for history buttons
+  $('#accordion-body').on('click', '.locations', function() {
 
-  //   const location = $(this).attr('data-location');    
-  //   fetchData(location);
+    // const location = $(this).attr('data-location');    
+    // fetchData(location);
+  
+    // Show the cards-container with a fade-in effect
+    $('#cards-container').fadeIn(1000, function () {   
+      $('#search-animation').removeClass('justify-content-center');
+    });
+
+    // Animation complete, set the flag to true
+    animationOccurred = true;
     
-  // })
+  });
 
 });

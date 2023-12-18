@@ -212,23 +212,3 @@
   display: block;
   box-shadow: inset 0 0 10px rgb(52, 103, 151, 0.35);
 }
-
-aside {
-  position: relative;
-}
-
-/* .transition-left {
-  transition: justify-content 0.1s ease-in-out;
-}
-
-.hide-search {
-  left: -100%;
-} */
-/* 
-#search-animation {
-  transition: justify-content 10s ease; /* Adjust the duration as needed */
-}
-
-#search-animation.justify-content {
-  justify-content: center;
-} */
