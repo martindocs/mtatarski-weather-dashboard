@@ -1,20 +1,47 @@
 /* MAIN CARD */
-.main {
-  height: 300px;
-}
-
 .main-card{
-  height: 300px;
+  /* height: 300px; */
   border-top-right-radius: 0;
+  /* background: rgba(104, 157, 212, 0.75); */
+  background: rgba(104, 157, 212, 0.75);
   border-bottom-right-radius: 0;
+  border: 1px solid #346797;
+  box-shadow: 2.5px 2.55px 10px rgba(52, 103, 151, 0.7),
+              2.5px -2.5px 10px rgba(52, 103, 151, 0.7);
   
 }
+
 .card-details {
-  height: 300px;
+  /* height: 321px; */
+  height: 100%;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
-  border-left: 0
+  border: 1px solid #346797;
+  border-left: 0;
+  background: rgba(104, 157, 212, 0.25);
+  box-shadow: 2.5px 2.55px 10px rgba(52, 103, 151, 0.7),
+              2.5px -2.5px 10px rgba(52, 103, 151, 0.7);
 } 
+
+.main-details {
+  position: relative;
+}
+
+.card-header {
+  background-color: transparent;
+}
+
+.main-details::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -10px; 
+  transform: translateY(-50%);
+  width: 1px; 
+  height: 70%;  
+  display: block;
+  box-shadow: inset 0 0 10px rgb(52, 103, 151, 0.13);
+}
 
 .search-city {
   text-align: center;
@@ -33,12 +60,34 @@
 }
 
 .main-date {
-  font-size: 1.8rem;
   text-align: center;
+  margin-bottom: 0;
+  font-size: .85rem;
+}
+
+.main-time {
+  position: relative;
+  font-size: 2rem;
+  text-align: center;
+  padding-bottom: 15px;  
+}
+
+.main-time::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%; 
+  transform: translateX(-50%);
+  width: 80%; 
+  height: 1px;  
+  display: block;
+  /* box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.15); */
+  box-shadow: inset 0 0 10px rgb(52, 103, 151, 0.13);
 }
 
 .main-temp {
   font-size: 2.75rem;
+  font-weight: 600;
 }
 
 .main-details > div{
@@ -50,6 +99,7 @@
   font-size: 1.15rem;
   justify-content: center;
   align-items: end;
+  border-bottom: 1px solid rgba(52, 103, 151, 0.15);
 }
 
 .details-body {
@@ -58,7 +108,106 @@
   justify-content: space-around;
 }
 
+/* SEARCH */
+.button-search {
+  background: rgb(59, 104, 146); 
+}
+
+.button-search:hover {
+  cursor: pointer;
+  color: black;
+  background: rgb(77, 134, 187);
+}
+
 /* HISTORY */
 .accordion-body > button {
   margin: 5px;
 }
+
+.accordion-body .btn {
+  color: white;
+  background: rgb(59, 104, 146);
+  /* background: rgb(204, 44, 44); */
+}
+
+.accordion-body .btn:hover {
+  color: black;
+  /* background: rgb(214, 85, 85); */
+  background: rgb(77, 134, 187);
+}
+
+/* FORECAST CARDS */
+.forecast-icon-pos {
+  position: relative;
+}
+
+#forecast .card-body {
+  
+  background: #65a67b;
+  /* border: 1px solid #0f500f;   */
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.forecast-header {
+  align-items: center;
+  font-size: 2rem;
+  margin-top: 30px;
+  padding-bottom: 10px;
+  font-weight: 600;
+}
+
+.forecast-date {
+  font-size: 1.1rem;
+  background: rgba(171, 212, 154, 0.25);
+  /* background: #65a67b; */
+  /* border: 1px solid #0f500f; */
+  border-bottom: 2px solid #0f500f;
+  color: rgb(15, 53, 15);
+  font-weight: 600;  
+}
+
+.forecast-icon{
+  margin-bottom: 20px;
+}
+
+.forecast-temp {  
+  position: absolute;
+  bottom: 70px;  
+  font-size: 1.5rem;
+}
+
+/* CARDS */
+.card-header.search-city {
+  /* background: #7391b6; */
+  border-top-right-radius: 0; 
+  border-bottom: 0;
+}
+
+#forecast .card {
+  box-shadow: .5px .5px 5px rgba(101, 166, 123, 0.5),
+              -.5px -.5px 5px rgba(101, 166, 123, 0.5);
+  border: 1px solid #0f500f;            
+              
+}
+
+.search-city {
+  position: relative;
+  font-weight: 600;
+}
+
+/* Add a pseudo-element to create the underline */
+.search-city::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%; 
+  transform: translateX(-50%);
+  width: 90%; 
+  height: 1px;   
+  display: block;
+  box-shadow: inset 0 0 10px rgb(52, 103, 151, 0.35);
+}
+
+
+
