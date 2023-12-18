@@ -224,3 +224,56 @@
   width: 100%;
   transform: translateX(-35%);
 }
+
+.col-md-6.remove-gap{
+  padding-right: 0;
+}
+
+.col-md-3.remove-gap{
+  padding-left: 0;
+}
+
+@media (max-width: 991px) {
+
+
+}
+
+
+/* Styles for screens ≥ 576px */
+@media (max-width: 768px) {
+  /* Your styles for screens ≥ 576px */
+  .col-md-6.remove-gap{
+    padding-right: 12px;
+    /* margin-top: 20px; */
+  }
+
+  .accordion {
+    margin-bottom: 20px;
+  }
+
+  .col-md-3.remove-gap{
+    padding-left: 12px;
+  }
+
+  .main-card{
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 0;
+  }
+
+  .card-details {
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 8px;
+    border-left: 1px solid #346797;
+  }
+
+  .forecast-temp{
+    bottom: 60px;
+  }
+
+  .forecast-wind, .forecast-humid {
+    font-size: .9rem;
+  }
+ 
+}
+
+
