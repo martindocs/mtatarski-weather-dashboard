@@ -13,8 +13,8 @@ $(document).ready(function() {
   
   // Check if the animation has occurred
   if (!animationOccurred) {
-    // Hide the #cards-container and move search input to center
-    // Only occurs on initially page load or page refresh
+    // Hide the #cards-container and move search input to the center
+    // and animation only occurs on initially page load or page refresh
     $('#cards-container').hide();
     $('#search-animation').addClass('justify-content-center');
   }
@@ -28,12 +28,13 @@ $(document).ready(function() {
     }
   }
   
-  // Function to create buttons in history list
+  // Function to create buttons in the history list
   const newButton = (search) => {
     const historyList = $('.accordion-body');
     
-    // Remove existing 'No History' element if it exists
-    $('#no-history').remove();
+    // Creating new button on empty history will remove 'No History' text element 
+    const noHistory = $('#no-history');
+    if(noHistory) noHistory.remove();
 
     // Generate buttons in the container history
     if(Array.isArray(search) && search.length > 0){
@@ -42,11 +43,12 @@ $(document).ready(function() {
         historyList.prepend(button);
       });
     }else{
-      // Create new button on user clicks/enter new location
+      // Create text 'No History' when no location is saved in localStorage
       if(search.length === 0){                      
         const p =  $('<p>').attr('id', 'no-history').text('No History');
         historyList.prepend(p);
       }else{
+        // Create new single button on user clicks/enter for new location
         const button = createButton(search);       
         historyList.prepend(button);
       }
@@ -61,7 +63,7 @@ $(document).ready(function() {
   // Get the data from the localStorage on initialization
   const searchHistory = getLocalStorage();
 
-  // Display the search history as buttons
+  // Display in the search history all saved locations as buttons
   if(searchHistory !== null || searchHistory.length > 0){    
     newButton(searchHistory);    
   }
@@ -71,7 +73,7 @@ $(document).ready(function() {
     return Math.round(number * 100 / 100);
   }
 
-  // Function to get current time
+  // Function to get current time for main card
   const calcTime = () => {
     const currentDate = new Date();    
     const minutes = currentDate.getMinutes() < 10 ? `0${currentDate.getMinutes()}` : currentDate.getMinutes();
@@ -86,7 +88,7 @@ $(document).ready(function() {
     }, 2000);    
   }
 
-  // Function to get the hours and minutes
+  // Function to get the Sunset and Sunrise hours and minutes for main card 'Details' card
   const sunSetSunRise = (time) => {
     // convert timestamp to milliseconds and then get the Date
     const date = new Date(time * 1000); 
@@ -117,6 +119,7 @@ $(document).ready(function() {
       population,
     } = args[0];
     
+    // Assign prop to HTML elements. Depend of the card type if it's main card or forecast cards.
     if(city) cardType.city.text(city);
     if(icon) {
       cardType.icon.attr('src', `https://openweathermap.org/img/wn/${icon}@2x.png`);
@@ -164,7 +167,7 @@ $(document).ready(function() {
     // API key
     const apiKey = '61accb2975e7eb205d195492e4e98f62';
 
-    // Query parameters
+    // Query URL 
     const queryUrl = 'https://api.openweathermap.org/data/2.5/forecast?q=' + searchInput + '&appid=' + apiKey + '&units=metric';
 
     try{
@@ -176,7 +179,7 @@ $(document).ready(function() {
 
       const data = await response.json();
       
-      const city = data.city;      
+      const city = data.city; // Get the city name, population and sunset and sunrise     
       const currentDate = new Date(); // Get the current date    
 
       let currentWeather = data.list[0]; // Initialize with the first entry
@@ -191,7 +194,7 @@ $(document).ready(function() {
           // the time difference in milliseconds between the two dates.
           Math.abs(entryDate - currentDate) < Math.abs(currentWeather.dt - currentDate)
         ) {
-          currentWeather = entry;
+          currentWeather = entry; // Assign weather for the current day
         }
       }
            
@@ -199,12 +202,13 @@ $(document).ready(function() {
       const filterData = [];
       const includedDays = [];
       data.list.forEach(entry => {
-        // convert timestamp to milliseconds and then get the Date
+        // Convert timestamp to milliseconds and then get the Date
         const entryDate = new Date(entry.dt * 1000);
         const entryDay = entryDate.getDate();
 
+        // Get forecast days that are not current day and is not alredy been added to the list 
         if (entryDay !== currentDate.getDate() && !includedDays.includes(entryDay)) {
-          filterData.push(entry);
+          filterData.push(entry); 
           includedDays.push(entryDay);
         }
       });
@@ -273,7 +277,8 @@ $(document).ready(function() {
       // Populate forecast cards with weather data
       filterData.forEach(function(data, index) {
         // Destructure weather data
-        const { weather, dt_txt: wdate, main, wind} = data;        
+        const { weather, dt_txt: wdate, main, wind} = data;  
+          // Forecast cards     
           card({
           cardType: forecastCards(index),
           icon: weather[0].icon,
@@ -284,11 +289,11 @@ $(document).ready(function() {
         })
       });
 
-      return true; // if current weather and five days forecast
+      return true; // True if current weather and five days forecast
 
     }catch(error){
       console.log(error);
-      return false; // if city not found or weather not found
+      return false; // False if city not found or weather not found
     }    
   };
 
@@ -328,14 +333,13 @@ $(document).ready(function() {
           animationOccurred = true;
 
         }else{      
-          // Otherwise show error message
+           // If fetch data was unsuccessful with 404 code, no city found
           feedbackMsg("No city found", 'red');
-          return;
         }
       });     
 
     }else{
-      // If fetch data was unsuccessful with 404 code, no city found
+      // If entry was empty
       feedbackMsg("Please enter city name", 'red');
     }
   });
@@ -376,13 +380,13 @@ $(document).ready(function() {
           animationOccurred = true;
 
         }else{     
-          // Otherwise show error message 
-          feedbackMsg("No city found", 'red');         
+          // If fetch data was unsuccessful with 404 code, no city found
+          feedbackMsg("No city found", 'red');               
         }
       });       
 
     }else{
-      // If fetch data was unsuccessful with 404 code, no city found
+       // If entry was empty
       feedbackMsg("Please enter city name", 'red');
     }
     
