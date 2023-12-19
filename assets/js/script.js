@@ -165,7 +165,7 @@ $(document).ready(function() {
     const apiKey = '61accb2975e7eb205d195492e4e98f62';
 
     // Query parameters
-    const queryUrl = 'http://api.openweathermap.org/data/2.5/forecast?q=' + searchInput + '&appid=' + apiKey + '&units=metric';
+    const queryUrl = 'https://api.openweathermap.org/data/2.5/forecast?q=' + searchInput + '&appid=' + apiKey + '&units=metric';
 
     try{
       const response = await fetch(queryUrl);
