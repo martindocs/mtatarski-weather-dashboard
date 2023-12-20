@@ -202,6 +202,12 @@ body{
   position: relative;
 }
 
+.forecast-desc {
+  position: absolute;
+  top: 18px;
+  left: 0;
+}
+
 .forecast-icon{
   margin-bottom: 20px;
 }

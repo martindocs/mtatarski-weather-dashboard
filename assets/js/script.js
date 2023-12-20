@@ -243,6 +243,7 @@ $(document).ready(function() {
         const date = $('<div>').addClass('card-header forecast-date').attr('id', `date-${i}`);
         const cardBody = $('<div>').addClass('card-body forecast-icon-pos');
         const row1 = $('<div>').addClass('row ');
+        const p = $('<p>').addClass('forecast-desc').attr('id', `desc-${i}`);
         const icon = $('<img>').addClass('forecast-icon').attr('src', weather[0].icon).attr('alt', `forecast icon ${weather[0].description}`).attr('id', `icon-${i}`);       
         const temp = $('<div>').addClass('forecast-temp').attr('id', `temp-${i}`);
         const row2 = $('<div>').addClass('row');
@@ -252,7 +253,7 @@ $(document).ready(function() {
 
         col2.append(winds, humid);
         row2.append(col2);
-        row1.append(icon, temp);
+        row1.append(p, icon, temp);
         cardBody.append(row1, row2);
         card.append(date, cardBody);
         col1.append(card);
@@ -263,6 +264,7 @@ $(document).ready(function() {
       const forecastCards = (index) => {
         return {
           date: $(`#date-${index}`),
+          desc: $(`#desc-${index}`),
           icon: $(`#icon-${index}`),
           temp: $(`#temp-${index}`),
           wind: $(`#wind-${index}`),
@@ -278,6 +280,7 @@ $(document).ready(function() {
           cardType: forecastCards(index),
           icon: weather[0].icon,
           date: wdate,
+          desc: weather[0].main,
           temp: roundUpNumber(main.temp),
           wind: roundUpNumber(wind.speed),
           humid: main.humidity,
