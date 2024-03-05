@@ -43,7 +43,7 @@ The primary tools used include:
 
   - **Access Search History:** Previously searched cities are added to the search history. Click on a city in the search history to view its weather details.
 
-4. Alternatively, you can use the Weather Dashbord directly simply navigate to the [GitHub Pages](https://martindocs.github.io/mtatarski-weather-dashboard/).
+4. Alternatively, you can use the Weather Dashbord directly simply navigate to the [GitHub Pages](https://martindocs.github.io/weather-dashboard/).
 
 ## Future Enhancements
 
